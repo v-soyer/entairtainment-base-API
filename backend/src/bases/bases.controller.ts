@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Logger, Post } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, ParseUUIDPipe, Post, Put, ValidationPipe } from '@nestjs/common';
 import { BasesService } from './bases.service';
 import { Base } from './base.entity';
 import { CreateBaseDto } from './dto/create-base.dto';
+import { UpdateBaseDto } from './dto/update-base.dto';
 
 @Controller('bases')
 export class BasesController {
@@ -11,13 +12,30 @@ export class BasesController {
 
   @Get()
   getAllBases(): Promise<Base[]> {
-    this.logger.verbose('[GET] /bases route is processed');
+    this.logger.verbose(`[GET] /bases route is processed`);
     return this.basesService.getAll();
   }
 
+  @Get('/:id')
+  getOneBase(@Param('id', ParseUUIDPipe) id: string): Promise<Base> {
+    this.logger.verbose(`[GET] /bases/${id} route is processed`);
+    return this.basesService.getOne(id);
+  }
+
   @Post()
-  createBases(@Body() createBaseDto: CreateBaseDto): Promise<Base> {
-    this.logger.verbose('[POST] /bases route is processed');
+  createBase(
+    @Body(ValidationPipe) createBaseDto: CreateBaseDto,
+  ): Promise<Base> {
+    this.logger.verbose(`[POST] /bases route is processed`);
     return this.basesService.create(createBaseDto);
+  }
+
+  @Put('/:id')
+  updateBase(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body(ValidationPipe) updateBaseDto: UpdateBaseDto,
+  ): Promise<Base> {
+    this.logger.verbose(`[PUT] /bases/${id} route is processed`);
+    return this.basesService.update(id, updateBaseDto);
   }
 }

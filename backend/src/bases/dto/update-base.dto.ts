@@ -1,6 +1,6 @@
 import { IsFQDN, IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateBaseDto {
+export class UpdateBaseDto {
   @IsString()
   @IsNotEmpty()
   name: string;
