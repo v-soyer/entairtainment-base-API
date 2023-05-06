@@ -1,6 +1,7 @@
-import { Controller, Get, Logger } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post } from '@nestjs/common';
 import { BasesService } from './bases.service';
 import { Base } from './base.entity';
+import { CreateBaseDto } from './dto/create-base.dto';
 
 @Controller('bases')
 export class BasesController {
@@ -9,8 +10,14 @@ export class BasesController {
   private logger = new Logger('BusinessRules Controller');
 
   @Get()
-  getAllArticles(): Promise<Base[]> {
-    this.logger.verbose('[GET] /base route is processed');
-    return this.basesService.getAllBases();
+  getAllBases(): Promise<Base[]> {
+    this.logger.verbose('[GET] /bases route is processed');
+    return this.basesService.getAll();
+  }
+
+  @Post()
+  createBases(@Body() createBaseDto: CreateBaseDto): Promise<Base> {
+    this.logger.verbose('[POST] /bases route is processed');
+    return this.basesService.create(createBaseDto);
   }
 }

@@ -23,8 +23,8 @@ export class Base {
   @Column()
   link: string;
 
-  @Column('simple-array')
-  activities: string[];
+  @Column()
+  activities: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
