@@ -53,4 +53,14 @@ export class BasesRepository {
 
     return found;
   }
+
+  async removeOneById(id: string): Promise<Base> {
+    const found = await this.findOneById(id);
+
+    if (found) {
+      await this.basesRepository.delete(found.id);
+    }
+
+    return found;
+  }
 }

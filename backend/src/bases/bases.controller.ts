@@ -1,4 +1,15 @@
-import { Body, Controller, Get, Logger, Param, ParseUUIDPipe, Post, Put, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Logger,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Put,
+  ValidationPipe,
+} from '@nestjs/common';
 import { BasesService } from './bases.service';
 import { Base } from './base.entity';
 import { CreateBaseDto } from './dto/create-base.dto';
@@ -37,5 +48,11 @@ export class BasesController {
   ): Promise<Base> {
     this.logger.verbose(`[PUT] /bases/${id} route is processed`);
     return this.basesService.update(id, updateBaseDto);
+  }
+
+  @Delete('/:id')
+  deleteBase(@Param('id', ParseUUIDPipe) id: string): Promise<Base> {
+    this.logger.verbose(`[DELETE] /bases/${id} route is processed`);
+    return this.basesService.remove(id);
   }
 }

@@ -8,12 +8,12 @@ import { UpdateBaseDto } from './dto/update-base.dto';
 export class BasesService {
   constructor(private readonly basesRepository: BasesRepository) {}
 
-  getAll(): Promise<Base[]> {
-    return this.basesRepository.findAll();
+  async getAll(): Promise<Base[]> {
+    return await this.basesRepository.findAll();
   }
 
-  getOne(id: string): Promise<Base> {
-    const base = this.basesRepository.findOneById(id);
+  async getOne(id: string): Promise<Base> {
+    const base = await this.basesRepository.findOneById(id);
 
     if (!base) {
       throw new NotFoundException('Base not found');
@@ -22,12 +22,22 @@ export class BasesService {
     return base;
   }
 
-  create(createBaseDto: CreateBaseDto): Promise<Base> {
-    return this.basesRepository.createByDto(createBaseDto);
+  async create(createBaseDto: CreateBaseDto): Promise<Base> {
+    return await this.basesRepository.createByDto(createBaseDto);
   }
 
-  update(id: string, updateBaseDto: UpdateBaseDto): Promise<Base> {
-    const base = this.basesRepository.updateByDto(id, updateBaseDto);
+  async update(id: string, updateBaseDto: UpdateBaseDto): Promise<Base> {
+    const base = await this.basesRepository.updateByDto(id, updateBaseDto);
+
+    if (!base) {
+      throw new NotFoundException('Base not found');
+    }
+
+    return base;
+  }
+
+  async remove(id: string): Promise<Base> {
+    const base = await this.basesRepository.removeOneById(id);
 
     if (!base) {
       throw new NotFoundException('Base not found');
