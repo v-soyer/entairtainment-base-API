@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { BaseModule } from './base/base.module';
+import { BasesModule } from './bases/bases.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
@@ -35,7 +35,7 @@ import * as Joi from 'joi';
       }),
       inject: [ConfigService],
     }),
-    BaseModule,
+    BasesModule,
   ],
   controllers: [],
   providers: [],
