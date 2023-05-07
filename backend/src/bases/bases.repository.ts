@@ -5,7 +5,6 @@ import { Base } from './base.entity';
 import { CreateBaseDto } from './dto/create-base.dto';
 import { UpdateBaseDto } from './dto/update-base.dto';
 import { ActivitiesRepository } from 'src/activities/activities.repository';
-import { Activity } from 'src/activities/activity.entity';
 
 @Injectable()
 export class BasesRepository {
