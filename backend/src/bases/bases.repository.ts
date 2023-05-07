@@ -5,6 +5,11 @@ import { Base } from './base.entity';
 import { CreateBaseDto } from './dto/create-base.dto';
 import { UpdateBaseDto } from './dto/update-base.dto';
 import { ActivitiesRepository } from 'src/activities/activities.repository';
+import {
+  IPaginationOptions,
+  Pagination,
+  paginate,
+} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class BasesRepository {
@@ -15,6 +20,10 @@ export class BasesRepository {
     @Inject(ActivitiesRepository)
     private readonly activitiesRepository: ActivitiesRepository,
   ) {}
+
+  async paginate(options: IPaginationOptions): Promise<Pagination<Base>> {
+    return paginate(this.basesRepository, options);
+  }
 
   async findAll(): Promise<Base[]> {
     const bases = await this.basesRepository

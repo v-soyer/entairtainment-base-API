@@ -3,13 +3,18 @@ import { Base } from './base.entity';
 import { BasesRepository } from './bases.repository';
 import { CreateBaseDto } from './dto/create-base.dto';
 import { UpdateBaseDto } from './dto/update-base.dto';
+import { Pagination } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class BasesService {
   constructor(private readonly basesRepository: BasesRepository) {}
 
-  async getAll(): Promise<Base[]> {
-    return await this.basesRepository.findAll();
+  async getAll(
+    page: number,
+    limit: number,
+    route: string,
+  ): Promise<Pagination<Base>> {
+    return await this.basesRepository.paginate({ page, limit, route: route });
   }
 
   async getOne(id: string): Promise<Base> {

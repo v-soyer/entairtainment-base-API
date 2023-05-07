@@ -1,19 +1,23 @@
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Delete,
   Get,
   Logger,
   Param,
+  ParseIntPipe,
   ParseUUIDPipe,
   Post,
   Put,
+  Query,
   ValidationPipe,
 } from '@nestjs/common';
 import { BasesService } from './bases.service';
 import { Base } from './base.entity';
 import { CreateBaseDto } from './dto/create-base.dto';
 import { UpdateBaseDto } from './dto/update-base.dto';
+import { Pagination } from 'nestjs-typeorm-paginate';
 
 @Controller('bases')
 export class BasesController {
@@ -22,9 +26,14 @@ export class BasesController {
   private logger = new Logger('BusinessRules Controller');
 
   @Get()
-  getAllBases(): Promise<Base[]> {
-    this.logger.verbose(`[GET] /bases route is processed`);
-    return this.basesService.getAll();
+  getAllBases(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
+    @Query('limit', new DefaultValuePipe(2), ParseIntPipe) limit = 2,
+  ): Promise<Pagination<Base>> {
+    this.logger.verbose(
+      `[GET] /bases?page=${page}&limit=${limit} route is processed`,
+    );
+    return this.basesService.getAll(page, limit, '/bases');
   }
 
   @Get('/:id')

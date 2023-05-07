@@ -26,7 +26,7 @@ export class Base {
   @Column()
   link: string;
 
-  @ManyToMany(() => Activity)
+  @ManyToMany(() => Activity, { eager: true })
   @JoinTable()
   activities: Activity[];
 
