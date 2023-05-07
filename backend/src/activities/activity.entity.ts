@@ -13,8 +13,11 @@ export class Activity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ unique: true })
   name: string;
+
+  @ManyToOne(() => Base, (base) => base.activities)
+  base: Base;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

@@ -6,7 +6,7 @@ import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 
 @Injectable()
-export class ActivityiesRepository {
+export class ActivitiesRepository {
   constructor(
     @InjectRepository(Activity)
     private readonly activitiesRepository: Repository<Activity>,
@@ -19,6 +19,12 @@ export class ActivityiesRepository {
   async findOneById(id: string): Promise<Activity> {
     return await this.activitiesRepository.findOneBy({
       id: id,
+    });
+  }
+
+  public async findOneByName(name: string): Promise<Activity> {
+    return await this.activitiesRepository.findOneBy({
+      name: name,
     });
   }
 

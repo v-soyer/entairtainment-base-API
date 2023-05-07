@@ -2,11 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Activity } from './activity.entity';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
-import { ActivityiesRepository } from './activities.repository';
+import { ActivitiesRepository } from './activities.repository';
 
 @Injectable()
-export class ActivityiesService {
-  constructor(private readonly activitiesRepository: ActivityiesRepository) {}
+export class ActivitiesService {
+  constructor(private readonly activitiesRepository: ActivitiesRepository) {}
 
   async getAll(): Promise<Activity[]> {
     return await this.activitiesRepository.findAll();
