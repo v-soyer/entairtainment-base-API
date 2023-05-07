@@ -3,7 +3,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -25,7 +26,8 @@ export class Base {
   @Column()
   link: string;
 
-  @OneToMany(() => Activity, (activity) => activity.base)
+  @ManyToMany(() => Activity)
+  @JoinTable()
   activities: Activity[];
 
   @CreateDateColumn({ type: 'timestamp' })
