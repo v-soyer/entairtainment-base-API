@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Activity } from './activity.entity';
@@ -35,7 +35,15 @@ export class ActivitiesRepository {
       name,
     });
 
-    await this.activitiesRepository.save(base);
+    try {
+      await this.activitiesRepository.save(base);
+    } catch (error) {
+      // 23505 is error code for duplicate
+      if (error.code === '23505') {
+        throw new ConflictException('This activity already exist');
+      }
+      throw new InternalServerErrorException();
+    }
     return base;
   }
 
