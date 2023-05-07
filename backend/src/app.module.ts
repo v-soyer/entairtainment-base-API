@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { BasesModule } from './bases/bases.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CategoriesModule } from './categories/categories.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -36,6 +37,7 @@ import * as Joi from 'joi';
       inject: [ConfigService],
     }),
     BasesModule,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [],
