@@ -1,0 +1,9 @@
+[
+  {
+    "name": "WAM PARK Toulouse",
+    "description": "Le WAM PARK est une station balnéaire avec moult activites nautiques proposées à un public de 7 à 77 ans",
+    "location": "Base de Loisirs Sesquières, All. des Foulques, 31200 Toulouse",
+    "link": "wampark.fr",
+    "activities": ["Wakeboard", "Water Jumps", "Water Games", "Paddle"]
+  }
+]

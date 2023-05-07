@@ -2,8 +2,9 @@ import { Module } from '@nestjs/common';
 import { BasesModule } from './bases/bases.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoriesModule } from './categories/categories.module';
+import { ActivitiesModule } from './activities/activities.module';
 import * as Joi from 'joi';
+import { ActivitiesRepository } from './activities/activities.repository';
 
 @Module({
   imports: [
@@ -37,7 +38,7 @@ import * as Joi from 'joi';
       inject: [ConfigService],
     }),
     BasesModule,
-    CategoriesModule,
+    ActivitiesModule,
   ],
   controllers: [],
   providers: [],

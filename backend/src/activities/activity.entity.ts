@@ -1,13 +1,15 @@
+import { Base } from 'src/bases/base.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
-export class Category {
+export class Activity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
