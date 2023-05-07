@@ -21,7 +21,7 @@ export class BasesRepository {
     private readonly activitiesRepository: ActivitiesRepository,
   ) {}
 
-  async paginate(options: IPaginationOptions): Promise<Pagination<Base>> {
+  async paginate(options: IPaginationOptions): Promise<Pagination<any>> {
     return paginate(this.basesRepository, options);
   }
 
@@ -43,7 +43,7 @@ export class BasesRepository {
   }
 
   async createByDto(createBaseDto: CreateBaseDto): Promise<Base> {
-    const { name, description, location, link, activities } = createBaseDto;
+    const { name, description, location, city, link, activities } = createBaseDto;
     const activitiesList = activities.split(',');
     const baseActivities = [];
 
@@ -62,6 +62,7 @@ export class BasesRepository {
       name,
       description,
       location,
+      city,
       link,
       activities: baseActivities,
     });
@@ -74,7 +75,7 @@ export class BasesRepository {
     const found = await this.findOneById(id);
 
     if (found) {
-      const { name, description, location, link, activities } = updateBaseDto;
+      const { name, description, location, city, link, activities } = updateBaseDto;
       const activitiesList = activities.split(',');
       const baseActivities = [];
 
@@ -91,6 +92,7 @@ export class BasesRepository {
       found.name = name;
       found.description = description;
       found.location = location;
+      found.city = city;
       found.link = link;
       found.activities = baseActivities;
       await this.basesRepository.save(found);

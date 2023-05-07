@@ -13,6 +13,10 @@ export class CreateBaseDto {
   @IsNotEmpty()
   location: string;
 
+  @IsString()
+  @IsNotEmpty()
+  city: string;
+
   @IsFQDN()
   @IsNotEmpty()
   link: string;

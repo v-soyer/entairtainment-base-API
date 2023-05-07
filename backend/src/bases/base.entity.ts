@@ -24,6 +24,9 @@ export class Base {
   location: string;
 
   @Column()
+  city: string;
+
+  @Column()
   link: string;
 
   @ManyToMany(() => Activity, { eager: true })

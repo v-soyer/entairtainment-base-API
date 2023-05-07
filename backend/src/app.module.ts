@@ -4,7 +4,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ActivitiesModule } from './activities/activities.module';
 import * as Joi from 'joi';
-import { ActivitiesRepository } from './activities/activities.repository';
 
 @Module({
   imports: [
@@ -18,6 +17,7 @@ import { ActivitiesRepository } from './activities/activities.repository';
         POSTGRES_DB: Joi.string().required(),
         POSTGRES_PORT: Joi.number().required(),
         POSTGRES_HOST: Joi.string().required(),
+        WEATHER_API_KEY: Joi.string().required(),
       }),
       isGlobal: true,
       cache: true,
