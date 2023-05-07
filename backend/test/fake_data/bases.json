@@ -1,9 +1,72 @@
-[
-  {
-    "name": "WAM PARK Toulouse",
-    "description": "Le WAM PARK est une station balnéaire avec moult activites nautiques proposées à un public de 7 à 77 ans",
-    "location": "Base de Loisirs Sesquières, All. des Foulques, 31200 Toulouse",
-    "link": "wampark.fr",
-    "activities": ["Wakeboard", "Water Jumps", "Water Games", "Paddle"]
-  }
-]
+{
+  "activities": [
+    {
+      "name": "Water Jumps"
+    },
+    {
+      "name": "Accrobranche"
+    },
+    {
+      "name": "Wakeboard"
+    },
+    {
+      "name": "Water Games"
+    },
+    {
+      "name": "Laser Game"
+    },
+    {
+      "name": "Escape Game"
+    },
+    {
+      "name": "Quizz Room"
+    },
+    {
+      "name": "Paddle"
+    }
+  ],
+  "bases": [
+    {
+      "name": "WAM PARK Toulouse",
+      "description": "Le WAM PARK est une station balnéaire avec moult activites nautiques proposées à un public de 7 à 77 ans",
+      "location": "Base de Loisirs Sesquières, All. des Foulques, 31200 Toulouse",
+      "link": "wampark.fr",
+      "activities": "Wakeboard,Water Jumps,Water Games,Paddle"
+    },
+    {
+      "name": "Laser Quest",
+      "description": "Laser Games pour toute la famille et Escape Rooms",
+      "location": "105 Rte d'Agde, 31500 Toulouse",
+      "link": "toulouse.laserquest.fr",
+      "activities": "Laser Game,Escape Game"
+    },
+    {
+      "name": "Quizz Room Toulouse",
+      "description": "Venez affronter vos amis et votre famille à la Quizz Room.",
+      "location": "148 Boulevard Déodat de Sévérac, 3 Rue Nungesser et Coli Parking:, 31300 Toulouse",
+      "link": "quiz-room.com",
+      "activities": "Quizz Room"
+    },
+    {
+      "name": "C L'AVENTURE",
+      "description": "Parce que vos enfants ont besoin de s'amuser et, ont besoin de rencontrer des enfants de leurs âges, C L'AVENTURE a été conçu pour eux!",
+      "location": "2 Rue de l'Égalité, 31200 Toulouse",
+      "link": "toulouse.c-laventure.com",
+      "activities": "Accrobranche"
+    },
+    {
+      "name": "WAM PARK Lyon",
+      "description": "Le WAM PARK est une station balnéaire avec moult activites nautiques proposées à un public de 7 à 77 ans",
+      "location": " base de loisirs, 1 All. de la Presqu'île, 69420 Condrieu",
+      "link": "wampark.fr",
+      "activities": "Wakeboard,Water Jumps,Water Games,Paddle"
+    },
+    {
+      "name": "WAM PARK MONTAUBAN",
+      "description": "Le WAM PARK est une station balnéaire avec moult activites nautiques proposées à un public de 7 à 77 ans",
+      "location": "525 Chem. de Montagne, 82710 Bressols",
+      "link": "wampark.fr",
+      "activities": "Wakeboard,Water Jumps,Water Games,Paddle"
+    }
+  ]
+}
