@@ -15,22 +15,22 @@ export class BasesService {
     private readonly configService: ConfigService,
   ) {}
 
+  async addWeatherInfo(item: any): Promise<any> {
+    const weather = await this.httpService.axiosRef.get(
+      `http://api.openweathermap.org/data/2.5/weather?q=${
+        item.city
+      }&units=metric&appid=${this.configService.get('WEATHER_API_KEY')}`,
+    );
+    item.weather = weather.data.weather[0].main;
+    item.temperature = weather.data.main.temp;
+    return item;
+  }
+
   async getAll(options: IPaginationOptions): Promise<Pagination<any>> {
-    const pages = await this.basesRepository.paginate(options);
+    const pages = await this.basesRepository.paginateAll(options);
 
     return new Pagination(
-      await Promise.all(
-        pages.items.map(async (item) => {
-          const weather = await this.httpService.axiosRef.get(
-            `http://api.openweathermap.org/data/2.5/weather?q=${
-              item.city
-            }&units=metric&appid=${this.configService.get('WEATHER_API_KEY')}`,
-          );
-          item.weather = weather.data.weather[0].main;
-          item.temperature = weather.data.main.temp;
-          return item;
-        }),
-      ),
+      await Promise.all(pages.items.map((item) => this.addWeatherInfo(item))),
       pages.meta,
       pages.links,
     );
