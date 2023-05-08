@@ -3,9 +3,10 @@ import { Base } from './base.entity';
 import { BasesRepository } from './bases.repository';
 import { CreateBaseDto } from './dto/create-base.dto';
 import { UpdateBaseDto } from './dto/update-base.dto';
-import { IPaginationOptions, Pagination } from 'nestjs-typeorm-paginate';
+import { Pagination } from 'nestjs-typeorm-paginate';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
+import { Like } from 'typeorm';
 
 @Injectable()
 export class BasesService {
@@ -14,6 +15,42 @@ export class BasesService {
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
   ) {}
+
+  createPaginationRoute(
+    route: string,
+    queriesKey: string[],
+    queriesValue: string[],
+  ): string {
+    let queryParam = '';
+
+    for (let i = 0; i < queriesKey.length; i++) {
+      if (queriesValue[i]) {
+        queryParam += '&' + queriesKey[i] + '=' + queriesValue[i];
+      }
+    }
+    return route + '?' + queryParam;
+  }
+
+  createFindOptions(searchField, activity): any {
+    const findOptions: any = { relations: {} };
+
+    if (activity && searchField) {
+      findOptions.where = [];
+      findOptions.relations.activities = true;
+      findOptions.where.push({ activities: { name: activity } });
+    } else if (activity) {
+      findOptions.where = { activities: { name: activity } };
+      findOptions.relations.activities = true;
+    }
+
+    if (searchField) {
+      findOptions.where = [];
+      findOptions.where.push({ name: Like(`%${searchField}%`) });
+      findOptions.where.push({ description: Like(`%${searchField}%`) });
+    }
+
+    return findOptions;
+  }
 
   async addWeatherInfo(item: any): Promise<any> {
     const weather = await this.httpService.axiosRef.get(
@@ -26,8 +63,26 @@ export class BasesService {
     return item;
   }
 
-  async getAll(options: IPaginationOptions): Promise<Pagination<any>> {
-    const pages = await this.basesRepository.paginateAll(options);
+  async getAllWithFilters(
+    page: number,
+    limit: number,
+    searchField: string,
+    activity: string,
+  ): Promise<Pagination<any>> {
+    const findOptions = this.createFindOptions(searchField, activity);
+
+    const pages = await this.basesRepository.paginateAllFilters(
+      {
+        page,
+        limit,
+        route: this.createPaginationRoute(
+          '/bases',
+          ['search', 'activity'],
+          [searchField, activity],
+        ),
+      },
+      findOptions,
+    );
 
     return new Pagination(
       await Promise.all(pages.items.map((item) => this.addWeatherInfo(item))),

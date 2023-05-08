@@ -26,14 +26,21 @@ export class BasesController {
   private logger = new Logger('BusinessRules Controller');
 
   @Get()
-  getAllBases(
+  getAllBasesWithFilters(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
     @Query('limit', new DefaultValuePipe(2), ParseIntPipe) limit = 2,
+    @Query('search') searchField: string,
+    @Query('activity') activity: string,
   ): Promise<Pagination<any>> {
     this.logger.verbose(
       `[GET] /bases?page=${page}&limit=${limit} route is processed`,
     );
-    return this.basesService.getAll({ page, limit, route: '/bases' });
+    return this.basesService.getAllWithFilters(
+      page,
+      limit,
+      searchField,
+      activity,
+    );
   }
 
   @Get('/:id')
