@@ -43,7 +43,8 @@ export class BasesRepository {
   }
 
   async createByDto(createBaseDto: CreateBaseDto): Promise<Base> {
-    const { name, description, location, city, link, activities } = createBaseDto;
+    const { name, description, location, city, link, activities } =
+      createBaseDto;
     const activitiesList = activities.split(',');
     const baseActivities = [];
 
@@ -75,7 +76,8 @@ export class BasesRepository {
     const found = await this.findOneById(id);
 
     if (found) {
-      const { name, description, location, city, link, activities } = updateBaseDto;
+      const { name, description, location, city, link, activities } =
+        updateBaseDto;
       const activitiesList = activities.split(',');
       const baseActivities = [];
 
