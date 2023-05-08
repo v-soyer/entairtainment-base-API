@@ -3,7 +3,7 @@ import { Base } from './base.entity';
 import { BasesRepository } from './bases.repository';
 import { CreateBaseDto } from './dto/create-base.dto';
 import { UpdateBaseDto } from './dto/update-base.dto';
-import { Pagination } from 'nestjs-typeorm-paginate';
+import { IPaginationOptions, Pagination } from 'nestjs-typeorm-paginate';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 
@@ -15,28 +15,25 @@ export class BasesService {
     private readonly configService: ConfigService,
   ) {}
 
-  async getAll(
-    page: number,
-    limit: number,
-    route: string,
-  ): Promise<Pagination<any>> {
-    const pages = await this.basesRepository.paginate({
-      page,
-      limit,
-      route: route,
-    });
+  async getAll(options: IPaginationOptions): Promise<Pagination<any>> {
+    const pages = await this.basesRepository.paginate(options);
 
-    for (let i = 0; i < pages.items.length; i++) {
-      const weather = await this.httpService.axiosRef.get(
-        `http://api.openweathermap.org/data/2.5/weather?q=${
-          pages.items[i].city
-        }&units=metric&appid=${this.configService.get('WEATHER_API_KEY')}`,
-      );
-      pages.items[i].weather = weather.data.weather[0].main;
-      pages.items[i].temperature = weather.data.main.temp;
-    }
-
-    return pages;
+    return new Pagination(
+      await Promise.all(
+        pages.items.map(async (item) => {
+          const weather = await this.httpService.axiosRef.get(
+            `http://api.openweathermap.org/data/2.5/weather?q=${
+              item.city
+            }&units=metric&appid=${this.configService.get('WEATHER_API_KEY')}`,
+          );
+          item.weather = weather.data.weather[0].main;
+          item.temperature = weather.data.main.temp;
+          return item;
+        }),
+      ),
+      pages.meta,
+      pages.links,
+    );
   }
 
   async getOne(id: string): Promise<Base> {
