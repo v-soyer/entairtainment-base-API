@@ -37,7 +37,7 @@ export class BasesController {
   }
 
   @Get('/:id')
-  getOneBase(@Param('id', ParseUUIDPipe) id: string): Promise<Base> {
+  getOneBase(@Param('id', ParseUUIDPipe) id: string): Promise<any> {
     this.logger.verbose(`[GET] /bases/${id} route is processed`);
     return this.basesService.getOne(id);
   }

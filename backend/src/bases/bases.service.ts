@@ -36,12 +36,20 @@ export class BasesService {
     );
   }
 
-  async getOne(id: string): Promise<Base> {
-    const base = await this.basesRepository.findOneById(id);
+  async getOne(id: string): Promise<any> {
+    const base: any = await this.basesRepository.findOneById(id);
 
     if (!base) {
       throw new NotFoundException('Base not found');
     }
+
+    const weather = await this.httpService.axiosRef.get(
+      `http://api.openweathermap.org/data/2.5/weather?q=${
+        base.city
+      }&units=metric&appid=${this.configService.get('WEATHER_API_KEY')}`,
+    );
+    base.weather = weather.data.weather[0].main;
+    base.temperature = weather.data.main.temp;
 
     return base;
   }
