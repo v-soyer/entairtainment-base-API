@@ -3,6 +3,9 @@ import { BasesModule } from './bases/bases.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ActivitiesModule } from './activities/activities.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+
 import * as Joi from 'joi';
 
 @Module({
@@ -39,6 +42,8 @@ import * as Joi from 'joi';
     }),
     BasesModule,
     ActivitiesModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],
