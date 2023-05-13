@@ -29,6 +29,9 @@ export class Base {
   @Column()
   link: string;
 
+  @Column()
+  author: string;
+
   @ManyToMany(() => Activity, { eager: true })
   @JoinTable()
   activities: Activity[];

@@ -11,6 +11,7 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { BasesService } from './bases.service';
@@ -18,6 +19,9 @@ import { Base } from './base.entity';
 import { CreateBaseDto } from './dto/create-base.dto';
 import { UpdateBaseDto } from './dto/update-base.dto';
 import { Pagination } from 'nestjs-typeorm-paginate';
+import { AuthGuard } from '@nestjs/passport';
+import { User } from 'src/users/user.entity';
+import { GetUser } from 'src/users/get-user.decorator';
 
 @Controller('bases')
 export class BasesController {
@@ -50,11 +54,13 @@ export class BasesController {
   }
 
   @Post()
+  @UseGuards(AuthGuard('jwt'))
   createBase(
     @Body(ValidationPipe) createBaseDto: CreateBaseDto,
+    @GetUser() user: User,
   ): Promise<Base> {
     this.logger.verbose(`[POST] /bases route is processed`);
-    return this.basesService.create(createBaseDto);
+    return this.basesService.create(createBaseDto, user);
   }
 
   @Put('/:id')

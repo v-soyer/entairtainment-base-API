@@ -7,6 +7,7 @@ import { Pagination } from 'nestjs-typeorm-paginate';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { Like } from 'typeorm';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class BasesService {
@@ -109,8 +110,8 @@ export class BasesService {
     return base;
   }
 
-  async create(createBaseDto: CreateBaseDto): Promise<Base> {
-    return await this.basesRepository.createByDto(createBaseDto);
+  async create(createBaseDto: CreateBaseDto, user: User): Promise<Base> {
+    return await this.basesRepository.createByDto(createBaseDto, user.username);
   }
 
   async update(id: string, updateBaseDto: UpdateBaseDto): Promise<Base> {

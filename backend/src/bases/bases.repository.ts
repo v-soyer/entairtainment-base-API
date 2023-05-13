@@ -58,7 +58,10 @@ export class BasesRepository {
     return bases[0];
   }
 
-  async createByDto(createBaseDto: CreateBaseDto): Promise<Base> {
+  async createByDto(
+    createBaseDto: CreateBaseDto,
+    author: string,
+  ): Promise<Base> {
     const { name, description, location, city, link, activities } =
       createBaseDto;
     const activitiesList = activities.split(',');
@@ -81,6 +84,7 @@ export class BasesRepository {
       location,
       city,
       link,
+      author,
       activities: baseActivities,
     });
 

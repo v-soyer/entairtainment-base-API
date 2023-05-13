@@ -13,6 +13,7 @@ const configService: ConfigService = new ConfigService();
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([UsersRepository]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET || configService.get('JWT_SECRET'),
@@ -20,7 +21,6 @@ const configService: ConfigService = new ConfigService();
         expiresIn: 3600,
       },
     }),
-    TypeOrmModule.forFeature([UsersRepository]),
     UsersModule,
   ],
   controllers: [AuthController],
