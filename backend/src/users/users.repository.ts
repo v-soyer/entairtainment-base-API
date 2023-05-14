@@ -26,9 +26,9 @@ export class UsersRepository {
   }
 
   async signUp(registerDto: RegisterDto): Promise<User> {
-    const { username, email, password, passwordReapeat } = registerDto;
+    const { username, email, password, passwordRepeat } = registerDto;
 
-    if (password != passwordReapeat) {
+    if (password != passwordRepeat) {
       throw new BadRequestException("Passwords don't match");
     }
 
