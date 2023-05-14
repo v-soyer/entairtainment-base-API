@@ -74,13 +74,15 @@ export class BasesRepository {
     const baseActivities = [];
 
     for (let i = 0; i < activitiesList.length; i++) {
-      const act = await this.activitiesRepository.findOneByName(
+      let act = await this.activitiesRepository.findOneByName(
         activitiesList[i],
       );
 
       if (!act) {
-        throw new NotFoundException("At least one activity doesn't exist");
+        await this.activitiesRepository.createByName(activitiesList[i]);
       }
+
+      act = await this.activitiesRepository.findOneByName(activitiesList[i]);
       baseActivities.push(act);
     }
 
@@ -119,12 +121,15 @@ export class BasesRepository {
       const baseActivities = [];
 
       for (let i = 0; i < activitiesList.length; i++) {
-        const act = await this.activitiesRepository.findOneByName(
+        let act = await this.activitiesRepository.findOneByName(
           activitiesList[i],
         );
+
         if (!act) {
-          throw new NotFoundException("At least one activity doesn't exist");
+          await this.activitiesRepository.createByName(activitiesList[i]);
         }
+
+        act = await this.activitiesRepository.findOneByName(activitiesList[i]);
         baseActivities.push(act);
       }
 

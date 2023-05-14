@@ -32,6 +32,23 @@ export class ActivitiesRepository {
     });
   }
 
+  async createByName(name: string): Promise<Activity> {
+    const base = this.activitiesRepository.create({
+      name,
+    });
+
+    try {
+      await this.activitiesRepository.save(base);
+    } catch (error) {
+      // 23505 is error code for duplicate
+      if (error.code === '23505') {
+        throw new ConflictException('This activity already exist');
+      }
+      throw new InternalServerErrorException();
+    }
+    return base;
+  }
+
   async createByDto(createActivityDto: CreateActivityDto): Promise<Activity> {
     const { name } = createActivityDto;
 
