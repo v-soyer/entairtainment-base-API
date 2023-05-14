@@ -28,6 +28,11 @@ The expected environment variable are:
   WEATHER_API_KEY: string
   JWT_SECRET: string
 ```
+
+## Ensure an access to OpenWeatherMap
+
+Create an account on the [Open Weather Map site](https://openweathermap.org/) and get an API key that will be used for querying the weather and temperature of a City.
+
 ## Running the application
 
 To run directly your application, use:
@@ -54,6 +59,11 @@ $ python fill_db_example.py <path_to_your_json_file>
 A .json file containing some data has been provided at '/test/fake_data/bases.json'
 
 **Note: The credentials of the user used by the script are email:'admin@gmail.com' and password:'root'**
+
+## Known Issue
+
+The behavior of the application when the 'City' field of a base isn't recognize hasn't been tested and isn't handled.
+
 ## Stay in Touch
 - Author: Valentin SOYER
 - LinkedIn: https://www.linkedin.com/in/valentin-soyer/
