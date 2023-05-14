@@ -13,7 +13,7 @@ $ npm install
 ```
 
 Then, you should ensure environment variables are available (via a .env file or by adding them in your docker-compose.yml file).
-The expected environment variable are:
+The expected environments variable are:
 
 ```
   NODE_ENV: string
@@ -29,7 +29,7 @@ The expected environment variable are:
   JWT_SECRET: string
 ```
 
-## Ensure an access to OpenWeatherMap
+### Ensure an access to OpenWeatherMap
 
 Create an account on the [Open Weather Map site](https://openweathermap.org/) and get an API key that will be used for querying the weather and temperature of a City.
 
