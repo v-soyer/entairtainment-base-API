@@ -60,9 +60,10 @@ A .json file containing some data has been provided at '/test/fake_data/bases.js
 
 **Note: The credentials of the user used by the script are email:'admin@gmail.com' and password:'root'**
 
-## Known Issue
+## Troubleshooting
 
-The behavior of the application when the 'City' field of a base isn't recognize hasn't been tested and isn't handled.
+- The behavior of the application when the 'City' field of a base isn't recognize hasn't been tested and isn't handled.
+- When requested on [GET] /bases, if the request query contains both 'search' and 'activity', the application provides the the result concatenated for those two fields and will not combine them
 
 ## Stay in Touch
 - Author: Valentin SOYER
