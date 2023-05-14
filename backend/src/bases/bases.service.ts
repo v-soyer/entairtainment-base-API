@@ -119,7 +119,11 @@ export class BasesService {
     updateBaseDto: UpdateBaseDto,
     user: User,
   ): Promise<Base> {
-    const base = await this.basesRepository.updateByDto(id, updateBaseDto, user);
+    const base = await this.basesRepository.updateByDto(
+      id,
+      updateBaseDto,
+      user,
+    );
 
     if (!base) {
       throw new NotFoundException('Base not found');
