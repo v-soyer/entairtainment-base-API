@@ -60,6 +60,14 @@ A .json file containing some data has been provided at '/test/fake_data/bases.js
 
 **Note: The credentials of the user used by the script are email:'admin@gmail.com' and password:'root'**
 
+## OpenAPI Documentation
+
+Once the server is up and running, you can access the OpenAPI documentation by going on the route
+```
+$ /api
+```
+
+
 ## Troubleshooting
 
 - The behavior of the application when the 'City' field of a base isn't recognize hasn't been tested and isn't handled.
