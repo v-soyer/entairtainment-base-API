@@ -1,30 +1,4 @@
 {
-  "activities": [
-    {
-      "name": "Water Jumps"
-    },
-    {
-      "name": "Accrobranche"
-    },
-    {
-      "name": "Wakeboard"
-    },
-    {
-      "name": "Water Games"
-    },
-    {
-      "name": "Laser Game"
-    },
-    {
-      "name": "Escape Game"
-    },
-    {
-      "name": "Quizz Room"
-    },
-    {
-      "name": "Paddle"
-    }
-  ],
   "bases": [
     {
       "name": "WAM PARK Toulouse",
