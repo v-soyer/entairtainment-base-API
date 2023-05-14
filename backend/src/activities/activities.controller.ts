@@ -9,11 +9,13 @@ import {
   Param,
   Body,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { ActivitiesService } from './activities.service';
 import { Activity } from './activity.entity';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('activities')
 export class ActivitiesController {
@@ -34,6 +36,7 @@ export class ActivitiesController {
   }
 
   @Post()
+  @UseGuards(AuthGuard('jwt'))
   createBase(
     @Body(ValidationPipe) createActivityDto: CreateActivityDto,
   ): Promise<Activity> {
@@ -42,6 +45,7 @@ export class ActivitiesController {
   }
 
   @Put('/:id')
+  @UseGuards(AuthGuard('jwt'))
   updateBase(
     @Param('id', ParseUUIDPipe) id: string,
     @Body(ValidationPipe) updateActivityDto: UpdateActivityDto,
@@ -51,6 +55,7 @@ export class ActivitiesController {
   }
 
   @Delete('/:id')
+  @UseGuards(AuthGuard('jwt'))
   deleteBase(@Param('id', ParseUUIDPipe) id: string): Promise<Activity> {
     this.logger.verbose(`[DELETE] /activities/${id} route is processed`);
     return this.activitiesService.remove(id);
