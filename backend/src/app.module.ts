@@ -13,8 +13,10 @@ import * as Joi from 'joi';
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         ENV_NAME: Joi.string().default('dev'),
+        API_DOC: Joi.string().default('FALSE'),
         APP_LOGGER: Joi.string().default('dev'),
         APP_PORT: Joi.number().required(),
+        APP_HOST: Joi.string().default('localhost'),
         POSTGRES_USER: Joi.string().required(),
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_DB: Joi.string().required(),
