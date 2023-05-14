@@ -45,7 +45,6 @@ export class BasesService {
     }
 
     if (searchField) {
-      findOptions.where = [];
       findOptions.where.push({ name: Like(`%${searchField}%`) });
       findOptions.where.push({ description: Like(`%${searchField}%`) });
     }
