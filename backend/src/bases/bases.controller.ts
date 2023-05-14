@@ -64,17 +64,23 @@ export class BasesController {
   }
 
   @Put('/:id')
+  @UseGuards(AuthGuard('jwt'))
   updateBase(
     @Param('id', ParseUUIDPipe) id: string,
     @Body(ValidationPipe) updateBaseDto: UpdateBaseDto,
+    @GetUser() user: User,
   ): Promise<Base> {
     this.logger.verbose(`[PUT] /bases/${id} route is processed`);
-    return this.basesService.update(id, updateBaseDto);
+    return this.basesService.update(id, updateBaseDto, user);
   }
 
   @Delete('/:id')
-  deleteBase(@Param('id', ParseUUIDPipe) id: string): Promise<Base> {
+  @UseGuards(AuthGuard('jwt'))
+  deleteBase(
+    @Param('id', ParseUUIDPipe) id: string,
+    @GetUser() user: User,
+  ): Promise<Base> {
     this.logger.verbose(`[DELETE] /bases/${id} route is processed`);
-    return this.basesService.remove(id);
+    return this.basesService.remove(id, user);
   }
 }

@@ -114,8 +114,12 @@ export class BasesService {
     return await this.basesRepository.createByDto(createBaseDto, user.username);
   }
 
-  async update(id: string, updateBaseDto: UpdateBaseDto): Promise<Base> {
-    const base = await this.basesRepository.updateByDto(id, updateBaseDto);
+  async update(
+    id: string,
+    updateBaseDto: UpdateBaseDto,
+    user: User,
+  ): Promise<Base> {
+    const base = await this.basesRepository.updateByDto(id, updateBaseDto, user);
 
     if (!base) {
       throw new NotFoundException('Base not found');
@@ -124,8 +128,8 @@ export class BasesService {
     return base;
   }
 
-  async remove(id: string): Promise<Base> {
-    const base = await this.basesRepository.removeOneById(id);
+  async remove(id: string, user: User): Promise<Base> {
+    const base = await this.basesRepository.removeOneById(id, user);
 
     if (!base) {
       throw new NotFoundException('Base not found');

@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Base } from './base.entity';
@@ -10,6 +15,7 @@ import {
   Pagination,
   paginate,
 } from 'nestjs-typeorm-paginate';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class BasesRepository {
@@ -92,12 +98,23 @@ export class BasesRepository {
     return base;
   }
 
-  async updateByDto(id: string, updateBaseDto: UpdateBaseDto): Promise<Base> {
+  async updateByDto(
+    id: string,
+    updateBaseDto: UpdateBaseDto,
+    user: User,
+  ): Promise<Base> {
     const found = await this.findOneById(id);
 
     if (found) {
       const { name, description, location, city, link, activities } =
         updateBaseDto;
+
+      if (found.author !== user.username) {
+        throw new ForbiddenException(
+          "You don't have the right to update this base data",
+        );
+      }
+
       const activitiesList = activities.split(',');
       const baseActivities = [];
 
@@ -123,8 +140,14 @@ export class BasesRepository {
     return found;
   }
 
-  async removeOneById(id: string): Promise<Base> {
+  async removeOneById(id: string, user: User): Promise<Base> {
     const found = await this.findOneById(id);
+
+    if (found.author !== user.username) {
+      throw new ForbiddenException(
+        "You don't have the right to update this base data",
+      );
+    }
 
     if (found) {
       await this.basesRepository.delete(found.id);
@@ -132,32 +155,4 @@ export class BasesRepository {
 
     return found;
   }
-
-  // async paginateByFilters(
-  //   options: IPaginationOptions,
-  //   searchField: string,
-  // ): Promise<Pagination<Base>> {
-  //   return paginate<Base>(this.basesRepository, options, {
-  //     where: [
-  //       { name: Like(`%${searchField}%`) },
-  //       { description: Like(`%${searchField}%`) },
-  //     ],
-  //   });
-  // }
-
-  // async paginateByActivity(
-  //   options: IPaginationOptions,
-  //   activity: string,
-  // ): Promise<Pagination<Base>> {
-  //   return paginate<Base>(this.basesRepository, options, {
-  //     relations: {
-  //       activities: true,
-  //     },
-  //     where: {
-  //       activities: {
-  //         name: activity,
-  //       },
-  //     },
-  //   });
-  // }
 }
