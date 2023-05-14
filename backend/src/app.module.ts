@@ -23,6 +23,7 @@ import * as Joi from 'joi';
         POSTGRES_PORT: Joi.number().required(),
         POSTGRES_HOST: Joi.string().required(),
         WEATHER_API_KEY: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(),
       }),
       isGlobal: true,
       cache: true,
