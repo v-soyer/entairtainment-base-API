@@ -37,7 +37,7 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: database
-      WEATHER_API_KEY:
-      JWT_SECRET:
+      WEATHER_API_KEY: e98a2138b6ae94d9ad046adaaf193380
+      JWT_SECRET: TopSecret
     
     command: "npm run start:dev"
